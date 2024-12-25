@@ -1,0 +1,38 @@
+BACKEND (GOLANG-BASED) DEPLOYMENT
+
+# Using tflite model
+
+package main
+
+import (
+    "github.com/tensorflow/tensorflow/tensorflow/go"
+    "fmt"
+)
+
+func main() {
+    model, err := tensorflow.LoadSavedModel("model.tflite", []string{"serve"}, nil)
+    if err != nil {
+        fmt.Printf("Error loading model: %s\n", err)
+        return
+    }
+    defer model.Session.Close()
+    
+    // Add logic to pass input and fetch output here
+}
+
+FRONTEND (FLUTTER-BASED) DEPLOYMENT
+
+# Use the tflite_flutter package for deploying .tflite models in Flutter.
+# 1. Add dependency to pubspec.yaml
+
+dependencies:
+  tflite_flutter: ^0.9.0
+
+# 2. Load the model in Flutter 
+
+import 'package:tflite_flutter/tflite_flutter.dart';
+
+void loadModel() async {
+  final interpreter = await Interpreter.fromAsset('model.tflite');
+  // Add logic to run inference
+}
